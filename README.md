@@ -17,7 +17,47 @@
 
 ### Cursor MCP Integration
 
-The server can be integrated with Cursor's Composer feature, providing direct access to all database management tools through natural language commands. See the [Setting up in Cursor](#-setting-up-in-cursor) section for configuration details.
+The Model Context Protocol (MCP) allows you to provide custom tools to agentic LLMs in Cursor. This server can be integrated with Cursor's Composer feature, providing direct access to all database management tools through natural language commands.
+
+#### Setting up in Cursor
+
+1. Open Cursor Settings > Features > MCP
+2. Click the "+ Add New MCP Server" button
+3. Fill in the modal form:
+   - Name: "Supabase MCP" (or any nickname you prefer)
+   - Type: `command` (stdio transport)
+   - Command: Your full command string with connection details
+
+Example configuration:
+```bash
+/usr/local/bin/node /path/to/dist/index.js postgresql://postgres.[PROJECT-ID]:[PASSWORD]@aws-0-eu-central-1.pooler.supabase.com:5432/postgres
+```
+
+Replace the following:
+- `/path/to/dist/index.js` with your actual path to the built JavaScript file
+- `[PROJECT-ID]` with your Supabase project ID
+- `[PASSWORD]` with your database password
+
+#### After Setup
+
+1. The server should appear in your MCP servers list
+2. Click the refresh button in the top right corner to populate the tool list
+3. All database management tools will become available in the Composer
+
+#### Using the Tools
+
+The Composer Agent will automatically detect and use relevant tools when you describe your database tasks. For example:
+
+- "List all tables in my database"
+- "Create a new users table"
+- "Add an index to the email column"
+
+When the agent uses a tool, you'll see:
+1. A prompt to approve/deny the tool call
+2. The tool call arguments (expandable)
+3. The response after approval
+
+Note: For stdio servers like this one, the command should be a valid shell command. If you need environment variables, consider using a wrapper script.
 
 ### Windsurf/Cascade Integration
 
@@ -113,21 +153,17 @@ This MCP server also supports Codeium's Cascade (Windsurf) integration. Note tha
 
 ### 📥 Installation
 
-1. Clone the repository:
-\`\`\`bash
+```bash
+# Clone the repository
 git clone https://github.com/Quegenx/supabase-mcp-server.git
 cd supabase-mcp-server
-\`\`\`
 
-2. Install dependencies:
-\`\`\`bash
+# Install dependencies
 npm install
-\`\`\`
 
-3. Build the project:
-\`\`\`bash
+# Build the project
 npm run build
-\`\`\`
+```
 
 ### ⚙️ Configuration
 
@@ -146,36 +182,19 @@ npm run build
    - `[YOUR-PROJECT-ID]` is your Supabase project ID (e.g., db.abc123xyz789)
    - `5432` is the default PostgreSQL port
 
-### 🔧 Setting up in Cursor
-
-1. Open Cursor Settings > Features > MCP
-2. Click "+ Add New MCP Server"
-3. Fill in the details:
-   - Name: "Supabase MCP"
-   - Type: command
-   - Command: `/usr/local/bin/node /path/to/mcp-postgres-full/dist/index.js postgresql://postgres.[PROJECT-ID]:[PASSWORD]@aws-0-eu-central-1.pooler.supabase.com:5432/postgres`
-
-   Example of a complete command (with placeholders):
-   \`\`\`bash
-   /usr/local/bin/node /Users/username/Desktop/supabase-mcp-server/dist/index.js postgresql://postgres.[PROJECT-ID]:[PASSWORD]@aws-0-eu-central-1.pooler.supabase.com:5432/postgres
-   \`\`\`
-   Note: Make sure to replace:
-   - `/Users/username/Desktop` with your actual path to the project
-   - `[PROJECT-ID]` with your Supabase project ID
-   - `[PASSWORD]` with your database password
-
 ## 📁 Project Structure
 
-\`\`\`
-├── dist/                  # Compiled JavaScript files
-│   ├── index.d.ts        # TypeScript declarations
-│   ├── index.js          # Main JavaScript file
-├── package-lock.json     # Dependency lock file
-├── package.json          # Project configuration
-├── src/                  # Source code
-│   ├── index.ts         # Main TypeScript file
-├── tsconfig.json        # TypeScript configuration
-\`\`\`
+```
+supabase-mcp-server/
+├── dist/                    # Compiled JavaScript files
+│   ├── index.d.ts          # TypeScript declarations
+│   └── index.js            # Main JavaScript file
+├── src/                    # Source code
+│   └── index.ts           # Main TypeScript file
+├── package.json           # Project configuration
+├── package-lock.json      # Dependency lock file
+└── tsconfig.json         # TypeScript configuration
+```
 
 ## 💡 Usage
 

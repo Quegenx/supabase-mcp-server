@@ -219,6 +219,64 @@ Examples:
 - 👮 Use appropriate access controls and permissions
 - 🛡️ Validate and sanitize all inputs to prevent SQL injection
 
+## 🛠️ Troubleshooting
+
+### Common Connection Issues
+
+1. **Node.js Path Issues**
+   - Ensure you're using the correct Node.js path
+   - On Mac/Linux: Use `which node` to find the correct path
+   - On Windows: Use `where node` to find the correct path
+   - Replace `/usr/local/bin/node` with your actual Node.js path
+
+2. **File Path Issues**
+   - Use absolute paths instead of relative paths
+   - On Mac/Linux: Use `pwd` in the project directory to get the full path
+   - On Windows: Use `cd` to get the full path
+   - Example: `/Users/username/projects/supabase-mcp-server/dist/index.js`
+
+3. **MCP Not Detecting Tools**
+   - Click the refresh button in Cursor's MCP settings
+   - Ensure the server is running (no error messages)
+   - Check if your connection string is correct
+   - Verify your Supabase credentials are valid
+
+4. **Permission Issues**
+   - Make sure the `dist` directory exists (run `npm run build`)
+   - Check file permissions (`chmod +x` on Unix systems)
+   - Run `npm install` with appropriate permissions
+
+### Debug Mode
+
+Add `DEBUG=true` before your command to see detailed logs:
+
+```bash
+DEBUG=true /usr/local/bin/node /path/to/dist/index.js [connection-string]
+```
+
+### Platform-Specific Notes
+
+#### Windows Users
+```bash
+# Use this format for the command
+"C:\\Program Files\\nodejs\\node.exe" "C:\\path\\to\\dist\\index.js" "postgresql://..."
+```
+
+#### Linux Users
+```bash
+# Find Node.js path
+which node
+
+# Make script executable
+chmod +x /path/to/dist/index.js
+```
+
+If you're still experiencing issues, please [open an issue](https://github.com/Quegenx/supabase-mcp-server/issues) with:
+- Your operating system
+- Node.js version (`node --version`)
+- Full error message
+- Steps to reproduce
+
 ## 🤝 Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.

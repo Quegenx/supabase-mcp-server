@@ -115,7 +115,7 @@ This MCP server also supports Codeium's Cascade (Windsurf) integration. Note tha
 
 1. Clone the repository:
 \`\`\`bash
-git clone [your-repo-url]
+git clone https://github.com/Quegenx/supabase-mcp-server.git
 cd supabase-mcp-server
 \`\`\`
 
@@ -208,6 +208,6 @@ Feel free to adjust usernames, repository URLs, and other details to match your 
   <p>
     <a href="https://cursor.sh">Cursor</a> •
     <a href="https://supabase.com">Supabase</a> •
-    <a href="https://github.com/[your-username]">GitHub</a>
+    <a href="https://github.com/Quegenx">GitHub</a>
   </p>
 </div> 

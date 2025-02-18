@@ -169,18 +169,25 @@ npm run build
 
 #### Getting Your Supabase Connection String
 
-1. Go to your Supabase dashboard
-2. Click on "Project Settings" > "Database"
-3. Find the "Connection String" section
-4. Select "URI" format
-5. Copy the connection string that looks like:
-   \`\`\`
-   postgresql://postgres:[YOUR-PASSWORD]@[YOUR-PROJECT-ID].supabase.co:5432/postgres
-   \`\`\`
-   Where:
-   - `[YOUR-PASSWORD]` is your database password
-   - `[YOUR-PROJECT-ID]` is your Supabase project ID (e.g., db.abc123xyz789)
-   - `5432` is the default PostgreSQL port
+To get your Supabase connection string:
+
+1. Navigate to your **Supabase Dashboard**
+2. Go to **Project Settings** > **Database**
+3. Locate the **Connection String** section
+4. Select **URI** format
+5. Copy your connection string, which follows this format:
+
+```bash
+postgresql://postgres:[YOUR-PASSWORD]@[YOUR-PROJECT-ID].supabase.co:5432/postgres
+```
+
+##### Connection String Components:
+
+| Component | Description | Example |
+|-----------|-------------|---------|
+| `[YOUR-PASSWORD]` | Your database password | `mySecurePassword123` |
+| `[YOUR-PROJECT-ID]` | Your Supabase project ID | `db.abc123xyz789` |
+| `5432` | Default PostgreSQL port | Fixed value |
 
 ## 📁 Project Structure
 

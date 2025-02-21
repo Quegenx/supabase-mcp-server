@@ -82,6 +82,41 @@ const server = new Server({
             beginTransaction: true,
             commitTransaction: true,
             rollbackTransaction: true,
+            // Additional Supabase-like features:
+            fetchTriggers: true,
+            createTrigger: true,
+            deleteTrigger: true,
+            fetchPublications: true,
+            createPublication: true,
+            deletePublication: true,
+            fetchRoles: true,
+            fetchPolicies: true,
+            createPolicy: true,
+            updatePolicy: true,
+            deletePolicy: true,
+            securityAdvisor: true,
+            performanceAdvisor: true,
+            queryPerformance: true,
+            fetchBuckets: true,
+            createBucket: true,
+            updateBucketPolicy: true,
+            deleteBucket: true,
+            edgeFunction: true,
+            realtime: true,
+            inspector: true,
+            configuration: true,
+            authSignIn: true,
+            authSignUp: true,
+            fetchSessions: true,
+            rateLimits: true,
+            sendEmail: true,
+            multiFactor: true,
+            urlConfiguration: true,
+            attackProtection: true,
+            authHooks: true,
+            advancedSettings: true,
+            advisor: true,
+            projectSettings: true,
         },
     },
 });
@@ -148,6 +183,7 @@ server.setRequestHandler(ReadResourceRequestSchema, async (request) => {
 server.setRequestHandler(ListToolsRequestSchema, async () => {
     return {
         tools: [
+            // Existing endpoints
             {
                 name: "query",
                 description: "Run SQL queries (read and write)",
@@ -231,7 +267,6 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
                     required: ["tableName"],
                 },
             },
-            // Row/Record Operations
             {
                 name: "fetchRecords",
                 description: "Retrieve rows from a table with optional filtering",
@@ -283,7 +318,6 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
                     required: ["tableName", "where"],
                 },
             },
-            // Column Operations
             {
                 name: "fetchColumns",
                 description: "List all columns for a given table",
@@ -334,7 +368,6 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
                     required: ["tableName", "columnName"],
                 },
             },
-            // Index and Constraint Management
             {
                 name: "createIndex",
                 description: "Create an index on a table",
@@ -392,7 +425,6 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
                     required: ["tableName", "constraintName"],
                 },
             },
-            // View and Function Operations
             {
                 name: "fetchViews",
                 description: "List all views in a schema",
@@ -474,7 +506,6 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
                     required: ["functionName"],
                 },
             },
-            // Schema Management
             {
                 name: "fetchSchemas",
                 description: "List all database schemas",
@@ -513,7 +544,6 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
                     required: ["schemaName"],
                 },
             },
-            // General SQL Execution
             {
                 name: "executeSQL",
                 description: "Execute an arbitrary SQL command",
@@ -523,7 +553,6 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
                     required: ["sql"],
                 },
             },
-            // Logging/Monitoring
             {
                 name: "fetchLogs",
                 description: "Fetch recent activity logs (using pg_stat_activity)",
@@ -534,7 +563,6 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
                 description: "Monitor changes (not implemented)",
                 inputSchema: { type: "object", properties: {} },
             },
-            // Backup/Restore
             {
                 name: "backupDatabase",
                 description: "Backup the database (not implemented)",
@@ -545,7 +573,6 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
                 description: "Restore the database (not implemented)",
                 inputSchema: { type: "object", properties: {} },
             },
-            // Migration & Data Import/Export
             {
                 name: "runDbMigration",
                 description: "Run a database migration",
@@ -585,7 +612,6 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
                     required: ["tableName", "records"],
                 },
             },
-            // User Management
             {
                 name: "fetchUsers",
                 description: "List database users",
@@ -624,7 +650,6 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
                     required: ["username"],
                 },
             },
-            // Transaction Management (stateless—placeholder)
             {
                 name: "beginTransaction",
                 description: "Begin a transaction (not supported in stateless mode)",
@@ -640,6 +665,270 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
                 description: "Rollback a transaction (not supported in stateless mode)",
                 inputSchema: { type: "object", properties: {} },
             },
+            // Additional Supabase-like endpoints:
+            {
+                name: "fetchTriggers",
+                description: "List triggers for a given table",
+                inputSchema: {
+                    type: "object",
+                    properties: { tableName: { type: "string" } },
+                    required: ["tableName"],
+                },
+            },
+            {
+                name: "createTrigger",
+                description: "Create a new trigger on a table",
+                inputSchema: {
+                    type: "object",
+                    properties: {
+                        triggerName: { type: "string" },
+                        tableName: { type: "string" },
+                        timing: { type: "string", enum: ["BEFORE", "AFTER", "INSTEAD OF"] },
+                        event: { type: "string", enum: ["INSERT", "UPDATE", "DELETE", "TRUNCATE"] },
+                        functionName: { type: "string" },
+                    },
+                    required: ["triggerName", "tableName", "timing", "event", "functionName"],
+                },
+            },
+            {
+                name: "deleteTrigger",
+                description: "Delete a trigger from a table",
+                inputSchema: {
+                    type: "object",
+                    properties: {
+                        triggerName: { type: "string" },
+                        tableName: { type: "string" },
+                    },
+                    required: ["triggerName", "tableName"],
+                },
+            },
+            {
+                name: "fetchPublications",
+                description: "List replication publications",
+                inputSchema: { type: "object", properties: {} },
+            },
+            {
+                name: "createPublication",
+                description: "Create a new publication",
+                inputSchema: {
+                    type: "object",
+                    properties: {
+                        publicationName: { type: "string" },
+                        forTables: { type: "string" },
+                        publish: { type: "string" },
+                    },
+                    required: ["publicationName", "forTables", "publish"],
+                },
+            },
+            {
+                name: "deletePublication",
+                description: "Drop a publication",
+                inputSchema: {
+                    type: "object",
+                    properties: { publicationName: { type: "string" } },
+                    required: ["publicationName"],
+                },
+            },
+            {
+                name: "fetchRoles",
+                description: "List all roles",
+                inputSchema: { type: "object", properties: {} },
+            },
+            {
+                name: "fetchPolicies",
+                description: "List row-level security policies for a table",
+                inputSchema: {
+                    type: "object",
+                    properties: { tableName: { type: "string" } },
+                    required: ["tableName"],
+                },
+            },
+            {
+                name: "createPolicy",
+                description: "Create a new row-level security policy",
+                inputSchema: {
+                    type: "object",
+                    properties: {
+                        tableName: { type: "string" },
+                        policyName: { type: "string" },
+                        command: { type: "string" },
+                        using: { type: "string" },
+                    },
+                    required: ["tableName", "policyName", "command", "using"],
+                },
+            },
+            {
+                name: "updatePolicy",
+                description: "Update an existing row-level security policy",
+                inputSchema: {
+                    type: "object",
+                    properties: {
+                        tableName: { type: "string" },
+                        policyName: { type: "string" },
+                        newPolicyName: { type: "string", optional: true },
+                        using: { type: "string", optional: true },
+                    },
+                    required: ["tableName", "policyName"],
+                },
+            },
+            {
+                name: "deletePolicy",
+                description: "Delete a row-level security policy",
+                inputSchema: {
+                    type: "object",
+                    properties: {
+                        tableName: { type: "string" },
+                        policyName: { type: "string" },
+                    },
+                    required: ["tableName", "policyName"],
+                },
+            },
+            {
+                name: "securityAdvisor",
+                description: "Provides security recommendations (stub)",
+                inputSchema: { type: "object", properties: {} },
+            },
+            {
+                name: "performanceAdvisor",
+                description: "Provides performance recommendations (stub)",
+                inputSchema: { type: "object", properties: {} },
+            },
+            {
+                name: "queryPerformance",
+                description: "Fetch query performance metrics (stub)",
+                inputSchema: { type: "object", properties: {} },
+            },
+            {
+                name: "fetchBuckets",
+                description: "List storage buckets (stub)",
+                inputSchema: { type: "object", properties: {} },
+            },
+            {
+                name: "createBucket",
+                description: "Create a new storage bucket (stub)",
+                inputSchema: {
+                    type: "object",
+                    properties: { bucketName: { type: "string" } },
+                    required: ["bucketName"],
+                },
+            },
+            {
+                name: "updateBucketPolicy",
+                description: "Update a bucket's policy (stub)",
+                inputSchema: { type: "object", properties: {} },
+            },
+            {
+                name: "deleteBucket",
+                description: "Delete a storage bucket (stub)",
+                inputSchema: {
+                    type: "object",
+                    properties: { bucketName: { type: "string" } },
+                    required: ["bucketName"],
+                },
+            },
+            {
+                name: "edgeFunction",
+                description: "Manage edge functions (stub)",
+                inputSchema: { type: "object", properties: {} },
+            },
+            {
+                name: "realtime",
+                description: "Manage realtime subscriptions (stub)",
+                inputSchema: { type: "object", properties: {} },
+            },
+            {
+                name: "inspector",
+                description: "Inspect tools and operations (stub)",
+                inputSchema: { type: "object", properties: {} },
+            },
+            {
+                name: "configuration",
+                description: "Manage system configuration (stub)",
+                inputSchema: { type: "object", properties: {} },
+            },
+            {
+                name: "authSignIn",
+                description: "User sign-in (stub)",
+                inputSchema: {
+                    type: "object",
+                    properties: {
+                        username: { type: "string" },
+                        password: { type: "string" },
+                    },
+                    required: ["username", "password"],
+                },
+            },
+            {
+                name: "authSignUp",
+                description: "User sign-up (stub)",
+                inputSchema: {
+                    type: "object",
+                    properties: {
+                        username: { type: "string" },
+                        password: { type: "string" },
+                        email: { type: "string" },
+                    },
+                    required: ["username", "password", "email"],
+                },
+            },
+            {
+                name: "fetchSessions",
+                description: "List active sessions (stub)",
+                inputSchema: { type: "object", properties: {} },
+            },
+            {
+                name: "rateLimits",
+                description: "Get or update rate limits (stub)",
+                inputSchema: { type: "object", properties: {} },
+            },
+            {
+                name: "sendEmail",
+                description: "Send an email (stub)",
+                inputSchema: {
+                    type: "object",
+                    properties: {
+                        to: { type: "string" },
+                        subject: { type: "string" },
+                        body: { type: "string" },
+                    },
+                    required: ["to", "subject", "body"],
+                },
+            },
+            {
+                name: "multiFactor",
+                description: "Multi-Factor Authentication (stub)",
+                inputSchema: { type: "object", properties: {} },
+            },
+            {
+                name: "urlConfiguration",
+                description: "Manage URL configuration (stub)",
+                inputSchema: { type: "object", properties: {} },
+            },
+            {
+                name: "attackProtection",
+                description: "Manage attack protection settings (stub)",
+                inputSchema: { type: "object", properties: {} },
+            },
+            {
+                name: "authHooks",
+                description: "Manage authentication hooks (stub)",
+                inputSchema: { type: "object", properties: {} },
+            },
+            {
+                name: "advancedSettings",
+                description: "Advanced settings (stub)",
+                inputSchema: { type: "object", properties: {} },
+            },
+            {
+                name: "advisor",
+                description: "Run advisor checks (stub)",
+                inputSchema: { type: "object", properties: {} },
+            },
+            {
+                name: "projectSettings",
+                description: "Manage project settings (stub)",
+                inputSchema: { type: "object", properties: {} },
+            },
         ],
     };
 });
@@ -650,6 +939,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
     const client = await pool.connect();
     try {
         switch (request.params.name) {
+            // Existing tools...
             case "query": {
                 const sql = request.params.arguments?.sql;
                 await client.query("BEGIN");
@@ -878,7 +1168,6 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
                     else {
                         throw new Error("No update operation specified for column");
                     }
-                    // Note: constraints update would need additional logic
                     await client.query(sql);
                     await client.query("COMMIT");
                     return {
@@ -1095,7 +1384,6 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
                 const { functionName, functionDefinition } = request.params.arguments;
                 await client.query("BEGIN");
                 try {
-                    // Using CREATE OR REPLACE for function update
                     await client.query(functionDefinition);
                     await client.query("COMMIT");
                     return {
@@ -1198,7 +1486,6 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
             }
             // Logging/Monitoring
             case "fetchLogs": {
-                // Using pg_stat_activity as a placeholder for logs
                 const sql = `SELECT * FROM pg_stat_activity`;
                 const result = await client.query(sql);
                 return {
@@ -1357,6 +1644,309 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
                     content: [
                         { type: "text", text: "Transaction management is not supported in stateless mode" },
                     ],
+                    isError: false,
+                };
+            }
+            // Additional Supabase-like endpoints
+            case "fetchTriggers": {
+                const { tableName } = request.params.arguments;
+                const sql = `SELECT tgname, tgtype FROM pg_trigger WHERE tgrelid = $1::regclass`;
+                const result = await client.query(sql, [tableName]);
+                return {
+                    content: [{ type: "text", text: JSON.stringify(result.rows, null, 2) }],
+                    isError: false,
+                };
+            }
+            case "createTrigger": {
+                const { triggerName, tableName, timing, event, functionName } = request.params.arguments;
+                await client.query("BEGIN");
+                try {
+                    const sql = `CREATE TRIGGER ${triggerName} ${timing} ${event} ON ${tableName} FOR EACH ROW EXECUTE FUNCTION ${functionName}()`;
+                    await client.query(sql);
+                    await client.query("COMMIT");
+                    return {
+                        content: [{ type: "text", text: `Trigger ${triggerName} created on ${tableName}` }],
+                        isError: false,
+                    };
+                }
+                catch (error) {
+                    await client.query("ROLLBACK");
+                    throw error;
+                }
+            }
+            case "deleteTrigger": {
+                const { triggerName, tableName } = request.params.arguments;
+                await client.query("BEGIN");
+                try {
+                    const sql = `DROP TRIGGER ${triggerName} ON ${tableName}`;
+                    await client.query(sql);
+                    await client.query("COMMIT");
+                    return {
+                        content: [{ type: "text", text: `Trigger ${triggerName} dropped from ${tableName}` }],
+                        isError: false,
+                    };
+                }
+                catch (error) {
+                    await client.query("ROLLBACK");
+                    throw error;
+                }
+            }
+            case "fetchPublications": {
+                const sql = `SELECT * FROM pg_publication`;
+                const result = await client.query(sql);
+                return {
+                    content: [{ type: "text", text: JSON.stringify(result.rows, null, 2) }],
+                    isError: false,
+                };
+            }
+            case "createPublication": {
+                const { publicationName, forTables, publish } = request.params.arguments;
+                await client.query("BEGIN");
+                try {
+                    const sql = `CREATE PUBLICATION ${publicationName} FOR TABLE ${forTables} WITH (publish = '${publish}')`;
+                    await client.query(sql);
+                    await client.query("COMMIT");
+                    return {
+                        content: [{ type: "text", text: `Publication ${publicationName} created` }],
+                        isError: false,
+                    };
+                }
+                catch (error) {
+                    await client.query("ROLLBACK");
+                    throw error;
+                }
+            }
+            case "deletePublication": {
+                const { publicationName } = request.params.arguments;
+                await client.query("BEGIN");
+                try {
+                    const sql = `DROP PUBLICATION ${publicationName}`;
+                    await client.query(sql);
+                    await client.query("COMMIT");
+                    return {
+                        content: [{ type: "text", text: `Publication ${publicationName} dropped` }],
+                        isError: false,
+                    };
+                }
+                catch (error) {
+                    await client.query("ROLLBACK");
+                    throw error;
+                }
+            }
+            case "fetchRoles": {
+                const sql = `SELECT rolname FROM pg_roles`;
+                const result = await client.query(sql);
+                return {
+                    content: [{ type: "text", text: JSON.stringify(result.rows, null, 2) }],
+                    isError: false,
+                };
+            }
+            case "fetchPolicies": {
+                const { tableName } = request.params.arguments;
+                const sql = `
+          SELECT pol.polname, pol.polcmd, rel.relname 
+          FROM pg_policy pol 
+          JOIN pg_class rel ON pol.polrelid = rel.oid
+          WHERE rel.relname = $1
+        `;
+                const result = await client.query(sql, [tableName]);
+                return {
+                    content: [{ type: "text", text: JSON.stringify(result.rows, null, 2) }],
+                    isError: false,
+                };
+            }
+            case "createPolicy": {
+                const { tableName, policyName, command, using } = request.params.arguments;
+                await client.query("BEGIN");
+                try {
+                    const sql = `CREATE POLICY ${policyName} ON ${tableName} FOR ${command} USING (${using})`;
+                    await client.query(sql);
+                    await client.query("COMMIT");
+                    return {
+                        content: [{ type: "text", text: `Policy ${policyName} created on ${tableName}` }],
+                        isError: false,
+                    };
+                }
+                catch (error) {
+                    await client.query("ROLLBACK");
+                    throw error;
+                }
+            }
+            case "updatePolicy": {
+                const { tableName, policyName, newPolicyName, using } = request.params.arguments;
+                await client.query("BEGIN");
+                try {
+                    let sql = `ALTER POLICY ${policyName} ON ${tableName}`;
+                    if (newPolicyName) {
+                        sql += ` RENAME TO ${newPolicyName}`;
+                    }
+                    if (using) {
+                        sql += ` USING (${using})`;
+                    }
+                    await client.query(sql);
+                    await client.query("COMMIT");
+                    return {
+                        content: [{ type: "text", text: `Policy ${policyName} updated on ${tableName}` }],
+                        isError: false,
+                    };
+                }
+                catch (error) {
+                    await client.query("ROLLBACK");
+                    throw error;
+                }
+            }
+            case "deletePolicy": {
+                const { tableName, policyName } = request.params.arguments;
+                await client.query("BEGIN");
+                try {
+                    const sql = `DROP POLICY ${policyName} ON ${tableName}`;
+                    await client.query(sql);
+                    await client.query("COMMIT");
+                    return {
+                        content: [{ type: "text", text: `Policy ${policyName} dropped from ${tableName}` }],
+                        isError: false,
+                    };
+                }
+                catch (error) {
+                    await client.query("ROLLBACK");
+                    throw error;
+                }
+            }
+            case "securityAdvisor": {
+                return {
+                    content: [{ type: "text", text: "Security Advisor feature not implemented" }],
+                    isError: false,
+                };
+            }
+            case "performanceAdvisor": {
+                return {
+                    content: [{ type: "text", text: "Performance Advisor feature not implemented" }],
+                    isError: false,
+                };
+            }
+            case "queryPerformance": {
+                return {
+                    content: [{ type: "text", text: "Query Performance metrics feature not implemented" }],
+                    isError: false,
+                };
+            }
+            case "fetchBuckets": {
+                return {
+                    content: [{ type: "text", text: "Storage buckets feature not implemented" }],
+                    isError: false,
+                };
+            }
+            case "createBucket": {
+                return {
+                    content: [{ type: "text", text: "Create bucket feature not implemented" }],
+                    isError: false,
+                };
+            }
+            case "updateBucketPolicy": {
+                return {
+                    content: [{ type: "text", text: "Bucket policy update not implemented" }],
+                    isError: false,
+                };
+            }
+            case "deleteBucket": {
+                return {
+                    content: [{ type: "text", text: "Delete bucket feature not implemented" }],
+                    isError: false,
+                };
+            }
+            case "edgeFunction": {
+                return {
+                    content: [{ type: "text", text: "Edge Functions feature not implemented" }],
+                    isError: false,
+                };
+            }
+            case "realtime": {
+                return {
+                    content: [{ type: "text", text: "Realtime feature not implemented" }],
+                    isError: false,
+                };
+            }
+            case "inspector": {
+                return {
+                    content: [{ type: "text", text: "Inspector feature not implemented" }],
+                    isError: false,
+                };
+            }
+            case "configuration": {
+                return {
+                    content: [{ type: "text", text: "Configuration feature not implemented" }],
+                    isError: false,
+                };
+            }
+            case "authSignIn": {
+                return {
+                    content: [{ type: "text", text: "Authentication Sign In feature not implemented" }],
+                    isError: false,
+                };
+            }
+            case "authSignUp": {
+                return {
+                    content: [{ type: "text", text: "Authentication Sign Up feature not implemented" }],
+                    isError: false,
+                };
+            }
+            case "fetchSessions": {
+                return {
+                    content: [{ type: "text", text: "Sessions feature not implemented" }],
+                    isError: false,
+                };
+            }
+            case "rateLimits": {
+                return {
+                    content: [{ type: "text", text: "Rate Limits feature not implemented" }],
+                    isError: false,
+                };
+            }
+            case "sendEmail": {
+                return {
+                    content: [{ type: "text", text: "Emails feature not implemented" }],
+                    isError: false,
+                };
+            }
+            case "multiFactor": {
+                return {
+                    content: [{ type: "text", text: "Multi-Factor Authentication feature not implemented" }],
+                    isError: false,
+                };
+            }
+            case "urlConfiguration": {
+                return {
+                    content: [{ type: "text", text: "URL Configuration feature not implemented" }],
+                    isError: false,
+                };
+            }
+            case "attackProtection": {
+                return {
+                    content: [{ type: "text", text: "Attack Protection feature not implemented" }],
+                    isError: false,
+                };
+            }
+            case "authHooks": {
+                return {
+                    content: [{ type: "text", text: "Auth Hooks feature not implemented" }],
+                    isError: false,
+                };
+            }
+            case "advancedSettings": {
+                return {
+                    content: [{ type: "text", text: "Advanced settings feature not implemented" }],
+                    isError: false,
+                };
+            }
+            case "advisor": {
+                return {
+                    content: [{ type: "text", text: "Advisor feature not implemented" }],
+                    isError: false,
+                };
+            }
+            case "projectSettings": {
+                return {
+                    content: [{ type: "text", text: "Project Settings feature not implemented" }],
                     isError: false,
                 };
             }

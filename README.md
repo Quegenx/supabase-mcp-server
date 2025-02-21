@@ -139,7 +139,47 @@ This MCP server also supports Codeium's Cascade (Windsurf) integration. Note tha
 - `updateschema`: Modify schemas
 - `deleteschema`: Remove schemas
 
-### 🛠️ 7. Additional Features
+### 🔥 7. Trigger Operations
+- `fetchtriggers`: List all triggers for a table
+- `createtrigger`: Create triggers with custom timing and events
+- `deletetrigger`: Remove triggers
+
+### 📡 8. Publication Management
+- `fetchpublications`: List replication publications
+- `createpublication`: Create new publications
+- `deletepublication`: Remove publications
+
+### 🔒 9. Role & Policy Management
+- `fetchroles`: List database roles
+- `fetchpolicies`: List RLS policies
+- `createpolicy`: Create security policies
+- `updatepolicy`: Modify RLS policies
+- `deletepolicy`: Remove security policies
+
+### ⚖️ 10. Advisory & Performance Tools
+- `securityadvisor`: Security recommendations
+- `performanceadvisor`: Optimization suggestions
+- `queryperformance`: Query metrics analysis
+
+### 🗄️ 11. Storage & Bucket Operations
+- `fetchbuckets`: List storage buckets
+- `createbucket`: Create new buckets
+- `updatebucketpolicy`: Modify bucket policies
+- `deletebucket`: Remove buckets
+
+### 🚀 12. Edge & Realtime Functions
+- `edgefunction`: Edge function management
+- `realtime`: Realtime subscription handling
+
+### 🔑 13. Authentication & Security
+- `authsignin`, `authsignup`: User authentication
+- `fetchsessions`: Session management
+- `ratelimits`: Rate limiting controls
+- `multifactor`: MFA implementation
+- `attackprotection`: Security measures
+- `authhooks`: Authentication hooks
+
+### 🛠️ 14. Additional Features
 - SQL Execution: `executesql`
 - Logging: `fetchlogs`
 - Change Monitoring: `monitorchanges`
@@ -148,6 +188,15 @@ This MCP server also supports Codeium's Cascade (Windsurf) integration. Note tha
 - Data Import/Export: `exportdata`, `importdata`
 - User Management: `fetchusers`, `createuser`, `updateuser`, `deleteuser`
 - Transaction Management: `begintransaction`, `committransaction`, `rollbacktransaction`
+
+### 🔧 15. System Management
+- `inspector`: Tool inspection
+- `configuration`: System settings
+- `sendemail`: Email functionality
+- `urlconfiguration`: URL management
+- `advancedsettings`: Advanced controls
+- `advisor`: System health checks
+- `projectsettings`: Project configuration
 
 ## 🚀 Quick Start
 

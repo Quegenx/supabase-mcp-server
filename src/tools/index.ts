@@ -10,6 +10,7 @@ import { enumManagementTools } from './enum-management/index.js';
 import { publicationManagementTools } from './publication-management/index.js';
 import { userManagementTools } from './user-management/index.js';
 import { realtimeManagementTools } from './realtime-management/index.js';
+import { advisorManagementTools } from './advisor-management/index.js';
 import { ToolDefinition } from '../types.js';
 
 // Realtime tool descriptions
@@ -39,6 +40,7 @@ export const allTools: ToolDefinition[] = [
   ...enumManagementTools,
   ...publicationManagementTools,
   ...userManagementTools,
+  ...advisorManagementTools,
   ...Object.entries(realtimeManagementTools).map(([name, tool]) => ({
     name,
     description: realtimeToolDescriptions[name] || `Realtime management tool: ${name}`,
@@ -61,5 +63,6 @@ export {
   enumManagementTools,
   publicationManagementTools,
   userManagementTools,
-  realtimeManagementTools
+  realtimeManagementTools,
+  advisorManagementTools
 }; 

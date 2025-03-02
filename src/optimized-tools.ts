@@ -14,6 +14,7 @@ import { enumManagementTools } from './tools/enum-management/index.js';
 import { publicationManagementTools } from './tools/publication-management/index.js';
 import { userManagementTools } from './tools/user-management/index.js';
 import { realtimeManagementTools } from './tools/realtime-management/index.js';
+import { advisorManagementTools } from './tools/advisor-management/index.js';
 import { ToolDefinition, ToolHandlerResult } from "./types.js";
 
 // Define tool categories for better organization
@@ -30,7 +31,8 @@ const toolCategories = {
   PUBLICATION: 'publication',
   USER: 'user',
   REALTIME: 'realtime',
-  QUERY: 'query'
+  QUERY: 'query',
+  ADVISOR: 'advisor'
 };
 
 // Map category names to their respective tool arrays
@@ -46,6 +48,7 @@ const categoryToolMap = {
   [toolCategories.ENUM]: enumManagementTools,
   [toolCategories.PUBLICATION]: publicationManagementTools,
   [toolCategories.USER]: userManagementTools,
+  [toolCategories.ADVISOR]: advisorManagementTools,
   // Realtime tools are handled differently due to their structure
 };
 
